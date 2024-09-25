@@ -9,7 +9,7 @@ class backendController extends Controller
 {
     // public function index()
     // {
-    //     return view('backend.master');
+    //     return view('backend.master');   
     // }
 
     public function info(){

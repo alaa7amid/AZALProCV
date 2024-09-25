@@ -1,67 +1,65 @@
 <header class="header_section">
-    <div class="container-fluid">
-      <nav class="navbar navbar-expand-lg custom_nav-container">
-        <a class="navbar-brand" href="{{ url('/') }}">
-          <img src="{{ asset('2.png') }}" alt="Logo" />
-          <span>
-            AZALProCV
-          </span>
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-  
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav">
-            <li class="nav-item active">
-              <a class="nav-link" href="{{ url('/') }}">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url('/about') }}">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url('/work') }}">Work</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url('/category') }}">Category</a>
-            </li>
-          </ul>
-          <div class="user_option">
-            {{-- <a href="#">
-              <span>
-                Login
-              </span>
-            </a> --}}
+  <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg custom_nav-container">
+      <!-- شعار الموقع -->
+      <a class="navbar-brand" href="{{ url('/') }}">
+        <img src="{{ asset('2.png') }}" alt="Logo" />
+        <span>AZALProCV</span>
+      </a>
 
-            
-            {{-- <form method="POST" action="{{ route('logout') }}">
-              @csrf
+      <!-- زر القائمة للأجهزة الصغيرة -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-              <x-dropdown-link :href="route('logout')"
-                      onclick="event.preventDefault();
-                                  this.closest('form').submit();">
-                  {{ __('Log Out') }}
-              </x-dropdown-link>
-          </form> --}}
+      <!-- قائمة التنقل -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{{ url('/') }}">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url('/about') }}">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url('/work') }}">Work</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url('/category') }}">Category</a>
+          </li>
+        </ul>
+
+        <!-- عناصر تسجيل الدخول والخروج -->
+        <ul class="navbar-nav ml-auto">
           @auth
-            <form method="POST" action="{{ route('logout') }}">
-              @csrf
-
-              <x-dropdown-link :href="route('logout')"
-                      onclick="event.preventDefault();
-                                  this.closest('form').submit();">
+            <li class="nav-item">
+              <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <x-dropdown-link :href="route('logout')"
+                      class="nav-link rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+                      onclick="event.preventDefault(); this.closest('form').submit();">
                   {{ __('Log Out') }}
-              </x-dropdown-link>
-          </form> 
+                </x-dropdown-link>
+              </form>
+            </li>
           @else
-            <a href="{{ route('login') }}" class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">Log in</a>
-
+            <li class="nav-item">
+              <a href="{{ route('login') }}" class="nav-link rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
+                Log in
+              </a>
+            </li>
             @if (Route::has('register'))
-              <a href="{{ route('register') }}" class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">Register</a>
+              <li class="nav-item">
+                <a href="{{ route('register') }}" class="nav-link rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
+                  Register
+                </a>
+              </li>
             @endif
           @endauth
-          </div>
-        </div>
+        </ul>
+      </div>
+
+
         <div>
           <div class="custom_menu-btn">
             <button>
@@ -74,3 +72,4 @@
       </nav>
     </div>
 </header>
+

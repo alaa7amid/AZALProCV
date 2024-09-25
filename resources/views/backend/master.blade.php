@@ -13,7 +13,7 @@
     @include('backend.layout.navbar')
     
     <!-- head section -->
-    @include('backend.layout.sidebar')
+    {{-- @include('backend.layout.sidebar') --}}
 
         <!-- main -->
     <main role="main" class="main-content">
