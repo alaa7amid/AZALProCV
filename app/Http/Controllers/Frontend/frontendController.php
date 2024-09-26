@@ -18,6 +18,7 @@ class frontendController extends Controller
     public function info(){
         return view('front-end.cv-content.basic-info');
     }
+    // store Baisc Information first page
 
     public function storeBaiscInfo(Request $request){
 
@@ -30,7 +31,12 @@ class frontendController extends Controller
         $info->city = $request->city;
         $info->save();
 
-        return redirect()->back()->with('message','insert information');
+        return redirect()->route('profilePage')->with('message','insert information');
+    }
+
+    // progile Information Seconde page
+    public function profilePage(){
+            return view('front-end.cv-content.profile_info');
         }
 }
   

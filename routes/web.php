@@ -27,6 +27,8 @@ Route::middleware('auth')->group(function(){
     // Route::get('user',[backendController::class,'index']);
     Route::get('user/basicInfo',[frontendController::class,'info'])->name('cerateCV');
     Route::post('user/store',[frontendController::class,'storeBaiscInfo'])->name('storeBaiscInfo');
+    Route::get('user/profile',[frontendController::class,'profilePage'])->name('profilePage');
+
 });
 
 
