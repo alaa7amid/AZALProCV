@@ -2,9 +2,16 @@
 
 @section('content')
 
+
+@if (session()->has('message'))
+    <div class="alert alert-success">
+        {{ session()->get('message') }}
+    </div>
+@endif
+
     <div class="container-fluid">
       <div class="row justify-content-center">
-        <div class="col-12">
+        <div class="col-12 pb-5 ">
           <div class="row">
             <div class="col-md-8 mb-4">
               <div class="card shadow mb-4">

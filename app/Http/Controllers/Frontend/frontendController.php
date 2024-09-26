@@ -29,10 +29,8 @@ class frontendController extends Controller
         $info->address = $request->address;
         $info->city = $request->city;
         $info->save();
-        
 
-        return dd($info);
-
+        return redirect()->back()->with('message','insert information');
         }
 }
   
