@@ -6,7 +6,7 @@
 @include('backend.layout.head')
   
 
-<body class="vertical  light  ">
+<body class="horizontal  light  ">
   <div class="wrapper">
 
     <!-- head section -->

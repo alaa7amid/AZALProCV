@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\BasicInfo;
+use App\Models\ProfileInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,12 +32,23 @@ class frontendController extends Controller
         $info->city = $request->city;
         $info->save();
 
-        return redirect()->route('profilePage')->with('message','insert information');
+        return redirect()->route('profilePage')->with('message','Basic information has been successfully entered');
     }
 
     // progile Information Seconde page
     public function profilePage(){
             return view('front-end.cv-content.profile_info');
-        }
+    }
+
+    // Store Profile Information 
+    public function storeProfileInfo(Request $request){
+        $profile = new ProfileInfo();
+        $profile->user_id = Auth::user()->id;
+        $profile->profile = $request->profile;
+        $profile->save();
+
+        return redirect()->back()->with('message','Profile information has been successfully entered');
+    }
+    
 }
   
