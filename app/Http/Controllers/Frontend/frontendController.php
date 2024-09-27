@@ -49,6 +49,41 @@ class frontendController extends Controller
 
         return redirect()->back()->with('message','Profile information has been successfully entered');
     }
+
+    // Edit Basic Information 
+    public function editBasicInfo(){
+        $basicInfo = BasicInfo::where('user_id',Auth::user()->id)->first();
+        if($basicInfo){
+            return view('front-end.cv-content.edit_basic_info',compact('basicInfo'));
+        }
+        
+        return view('front-end.cv-content.no-data');
+    }
     
+    //Update Basic Information
+    public function updateBaiscInfo(Request $request){
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phoneNumber' => 'required|string|max:15',
+            'address' => 'required|string',
+            'city' => 'required|string',
+        ]);
+
+        $basicInfo = BasicInfo::where('user_id',Auth::user()->id)->first();
+        if($basicInfo){
+            $basicInfo->name = $request->name;
+            $basicInfo->email = $request->email;
+            $basicInfo->phoneNumber = $request->phoneNumber;
+            $basicInfo->address = $request->address;
+            $basicInfo->city = $request->city;
+            $basicInfo->save();
+
+            return redirect()->back()->with('message','The information has been updated successfully.');
+        }
+        return redirect()->back()->with('message','The record to update could not be found.');
+        
+    }
 }
   

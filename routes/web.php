@@ -25,12 +25,17 @@ require __DIR__.'/auth.php';
 
 Route::middleware('auth')->group(function(){
     // Route::get('user',[backendController::class,'index']);
+    //basic information
     Route::get('user/basicInfo',[frontendController::class,'info'])->name('cerateCV');
     Route::post('user/basicInfo/store',[frontendController::class,'storeBaiscInfo'])->name('storeBaiscInfo');
+
+    //profile information
     Route::get('user/profile',[frontendController::class,'profilePage'])->name('profilePage');
     Route::post('user/profile/store',[frontendController::class,'storeProfileInfo'])->name('storeProfileInfo');
 
-
+    //edit basic information
+    Route::get('user/basicInfo/edit',[frontendController::class,'editBasicInfo'])->name('editBasicInfo');
+    Route::post('user/basicInfo/update',[frontendController::class,'updateBaiscInfo'])->name('updateBaiscInfo');
 });
 
 

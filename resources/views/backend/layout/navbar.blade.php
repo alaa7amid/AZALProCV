@@ -29,12 +29,13 @@
             <a class="nav-link pl-lg-2" href="./dashboard-system.html"><span class="ml-1">Systems</span></a>
           </div>
         </li>
+
         <li class="nav-item dropdown">
           <a href="#" id="ui-elementsDropdown" class="dropdown-toggle nav-link" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="ml-lg-2">UI elements</span>
+            <span class="ml-lg-2">Edit CV</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="ui-elementsDropdown">
-            <a class="nav-link pl-lg-2" href="./ui-color.html"><span class="ml-1">Colors</span></a>
+            <a class="nav-link pl-lg-2" href="{{route('editBasicInfo')}}"><span class="ml-1">Edit Basic Information</span></a>
             <a class="nav-link pl-lg-2" href="./ui-typograpy.html"><span class="ml-1">Typograpy</span></a>
             <a class="nav-link pl-lg-2" href="./ui-icons.html"><span class="ml-1">Icons</span></a>
             <a class="nav-link pl-lg-2" href="./ui-buttons.html"><span class="ml-1">Buttons</span></a>
@@ -44,6 +45,8 @@
             <a class="nav-link pl-lg-2" href="./ui-progress.html"><span class="ml-1">Progress</span></a>
           </div>
         </li>
+
+{{--         
         <li class="nav-item">
           <a class="nav-link" href="widgets.html">
             <span class="ml-lg-2">Widgets</span>
@@ -185,7 +188,7 @@
               </ul>
             </li>
           </ul>
-        </li>
+        </li> --}}
       </ul>
     </div>
     <form class="form-inline ml-md-auto d-none d-lg-flex searchform text-muted">
