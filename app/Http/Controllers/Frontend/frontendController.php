@@ -80,10 +80,35 @@ class frontendController extends Controller
             $basicInfo->city = $request->city;
             $basicInfo->save();
 
+        $profileInfo = ProfileInfo::where('user_id',Auth::user()->id)->first();
             return redirect()->back()->with('message','The information has been updated successfully.');
         }
         return redirect()->back()->with('message','The record to update could not be found.');
-        
+    }
+
+    //Edit Profile Information
+    public function editProfileInfo(){
+        $profileInfo = ProfileInfo::where('user_id',Auth::user()->id)->first();
+        if($profileInfo){
+        return view('front-end.cv-content.edit_profile_info',compact('profileInfo'));  
+        }
+        return view('front-end.cv-content.no-data');
+    }
+
+    //Update Profile Information
+    public function updateProfileInfo(Request $request){
+
+        $request->validate([
+            'profile'=>'required|string'
+        ]);
+        $profileInfo = ProfileInfo::where('user_id',Auth::user()->id)->first();
+
+        if($profileInfo){
+            $profileInfo->profile = $request->profile;
+            $profileInfo->save();
+            return redirect()->back()->with('message','The information has been updated successfully.');
+        }
+        return redirect()->back()->with('message','The record to update could not be found.');
     }
 }
   

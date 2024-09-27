@@ -36,6 +36,10 @@ Route::middleware('auth')->group(function(){
     //edit basic information
     Route::get('user/basicInfo/edit',[frontendController::class,'editBasicInfo'])->name('editBasicInfo');
     Route::post('user/basicInfo/update',[frontendController::class,'updateBaiscInfo'])->name('updateBaiscInfo');
+
+    //edit profile information
+    Route::get('user/profile/edit',[frontendController::class,'editProfileInfo'])->name('editProfileInfo');
+    route::post('user/profile/update',[frontendController::class,'updateProfileInfo'])->name('updateProfileInfo');
 });
 
 
