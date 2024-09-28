@@ -5,7 +5,7 @@
 
 @include('backend.layout.head')
   
-
+@yield('css')
 <body class="horizontal  light  ">
   <div class="wrapper">
 
@@ -24,6 +24,9 @@
   <!-- .script -->
   @include('backend.layout.script')
 
+
+    
+@yield('js')
 </body>
 
 </html>

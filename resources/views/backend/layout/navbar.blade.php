@@ -37,7 +37,7 @@
           <div class="dropdown-menu" aria-labelledby="ui-elementsDropdown">
             <a class="nav-link pl-lg-2" href="{{route('editBasicInfo')}}"><span class="ml-1">Edit Basic Information</span></a>
             <a class="nav-link pl-lg-2" href="{{route('editProfileInfo')}}"><span class="ml-1">Edit Profile Information</span></a>
-            <a class="nav-link pl-lg-2" href="./ui-icons.html"><span class="ml-1">Icons</span></a>
+            <a class="nav-link pl-lg-2" href="{{route('editSkills')}}"><span class="ml-1">Edit Skills</span></a>
             <a class="nav-link pl-lg-2" href="./ui-buttons.html"><span class="ml-1">Buttons</span></a>
             <a class="nav-link pl-lg-2" href="./ui-notification.html"><span class="ml-1">Notifications</span></a>
             <a class="nav-link pl-lg-2" href="./ui-modals.html"><span class="ml-1">Modals</span></a>

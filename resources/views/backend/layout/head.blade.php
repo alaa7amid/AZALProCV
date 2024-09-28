@@ -24,4 +24,6 @@
   <!-- App CSS -->
   <link rel="stylesheet" href="{{ asset('back-end/css/app-light.css') }}" id="lightTheme">
   <link rel="stylesheet" href="{{ asset('back-end/css/app-dark.css') }}" id="darkTheme" disabled>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css">
 </head>

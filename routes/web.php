@@ -28,18 +28,28 @@ Route::middleware('auth')->group(function(){
     //basic information
     Route::get('user/basicInfo',[frontendController::class,'info'])->name('cerateCV');
     Route::post('user/basicInfo/store',[frontendController::class,'storeBaiscInfo'])->name('storeBaiscInfo');
-
+    
+    //edit basic information
+    Route::get('user/basicInfo/edit',[frontendController::class,'editBasicInfo'])->name('editBasicInfo');
+    Route::post('user/basicInfo/update',[frontendController::class,'updateBaiscInfo'])->name('updateBaiscInfo');
+    
     //profile information
     Route::get('user/profile',[frontendController::class,'profilePage'])->name('profilePage');
     Route::post('user/profile/store',[frontendController::class,'storeProfileInfo'])->name('storeProfileInfo');
 
-    //edit basic information
-    Route::get('user/basicInfo/edit',[frontendController::class,'editBasicInfo'])->name('editBasicInfo');
-    Route::post('user/basicInfo/update',[frontendController::class,'updateBaiscInfo'])->name('updateBaiscInfo');
-
     //edit profile information
     Route::get('user/profile/edit',[frontendController::class,'editProfileInfo'])->name('editProfileInfo');
     route::post('user/profile/update',[frontendController::class,'updateProfileInfo'])->name('updateProfileInfo');
+
+    //skills 
+    Route::get('user/skills',[frontendController::class,'skills'])->name('skills');
+    Route::post('user/skills/store',[frontendController::class,'storeSkills'])->name('storeSkills');
+
+    //edit skills
+    Route::get('user/skills/edit',[frontendController::class,'editSkills'])->name('editSkills');
+    Route::post('user/skills/update',[frontendController::class,'updateSkills'])->name('updateSkills');
+
+
 });
 
 
