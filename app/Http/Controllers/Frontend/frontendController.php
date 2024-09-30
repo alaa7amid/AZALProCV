@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\BasicInfo;
+use App\Models\Education;
 use App\Models\ProfileInfo;
 use App\Models\Skills;
 use Illuminate\Http\Request;
@@ -23,6 +24,14 @@ class frontendController extends Controller
     // store Baisc Information first page
 
     public function storeBaiscInfo(Request $request){
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phoneNumber' => 'required|string|max:15',
+            'address' => 'required|string',
+            'city' => 'required|string',
+        ]);
 
         $info = new BasicInfo();
         $info->user_id = Auth::user()->id;
@@ -80,6 +89,10 @@ class frontendController extends Controller
 
     // Store Profile Information 
     public function storeProfileInfo(Request $request){
+        $request->validate([
+            'profile'=>'required|string'
+        ]);
+
         $profile = new ProfileInfo();
         $profile->user_id = Auth::user()->id;
         $profile->profile = $request->profile;
@@ -129,7 +142,7 @@ class frontendController extends Controller
         $skills->skills = $request->skills;
         $skills->save();
 
-        return redirect()->back()->with('message','The skills has been successfully entered.');
+        return redirect()->route('education')->with('message','The skills has been successfully entered.');
  
     }
 
@@ -159,10 +172,71 @@ class frontendController extends Controller
         }
         return redirect()->back()->with('message','The record to update could not be found.');
 
-        
-
-
-
     }
+
+    //Education
+    public function education(){ 
+        return view('front-end.cv-content.education');
+    }
+
+    //Store Education
+    public function storeEducation(Request $request){
+
+        $request->validate([
+            'education_level'=>'required|string',
+            'startDate'=>'required|date',
+            'endDate'=>'required|date',
+            'department'=>'required|string',
+
+        ]);
+
+        $education = new Education();
+        $education->user_id = Auth::user()->id;
+        $education->education_level = $request->education_level;
+        $education->startDate = $request->startDate;
+        $education->endDate  = $request->endDate;
+        $education->department = $request->department;
+        $education->save();
+
+        return redirect()->back()->with('message','Education Details has been successfully entered');
+    }
+
+    //Edit Education
+    public function editEducation(){
+        $education = Education::where('user_id',Auth::user()->id)->first();
+        if($education){
+           return view('front-end.cv-content.edit_education',compact('education')); 
+        }
+        return view('front-end.cv-content.no-data');
+        
+    }
+
+    //Update Education
+    public function updateEducation(Request $request){
+        $request->validate([
+            'education_level' => 'required|string',
+            'startDate' => 'required|date',
+            'endDate'=>'required|date',
+            'department' => 'required|string',
+        ]);
+    
+        
+    
+        $education = Education::where('user_id', Auth::user()->id)->first();
+        if ($education) {
+            $education->update([
+                'education_level' => $request->education_level,
+                'startDate' => $request->startDate,
+                'endDate' => $request->endDate,
+                'department' => $request->department,
+            ]);
+    
+            return redirect()->back()->with('message', 'The education details have been updated successfully.');
+        }
+    
+        return redirect()->back()->with('message', 'The record to update could not be found.');
+    }
+    
+
 }
   

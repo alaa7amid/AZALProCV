@@ -50,6 +50,13 @@ Route::middleware('auth')->group(function(){
     Route::post('user/skills/update',[frontendController::class,'updateSkills'])->name('updateSkills');
 
 
+    //Education
+    Route::get('user/education',[frontendController::class,'education'])->name('education');
+    Route::post('user/education/store',[frontendController::class,'storeEducation'])->name('storeEducation');
+
+    //edit education
+    Route::get('user/education/edit',[frontendController::class,'editEducation'])->name('editEducation');
+    Route::post('user/education/update',[frontendController::class,'updateEducation'])->name('updateEducation');
 });
 
 
