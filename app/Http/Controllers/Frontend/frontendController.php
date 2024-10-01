@@ -5,10 +5,14 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\BasicInfo;
 use App\Models\Education;
+use App\Models\Image;
+use App\Models\Language;
 use App\Models\ProfileInfo;
 use App\Models\Skills;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class frontendController extends Controller
 {
@@ -198,7 +202,7 @@ class frontendController extends Controller
         $education->department = $request->department;
         $education->save();
 
-        return redirect()->back()->with('message','Education Details has been successfully entered');
+        return redirect()->route('language')->with('message','Education Details has been successfully entered');
     }
 
     //Edit Education
@@ -237,6 +241,79 @@ class frontendController extends Controller
         return redirect()->back()->with('message', 'The record to update could not be found.');
     }
     
+
+    //Language 
+    public function language(){
+        return view('front-end.cv-content.language');
+    }
+    //Store Language
+    public function storeLanguage(Request $request){
+        // $request->validate([
+        //     'language'=>'required'
+        // ]);
+
+        $language = new Language();
+        $language->user_id = Auth::user()->id;
+        $language->language = $request->language;
+        $language->save();
+
+        return redirect()->route('uploadImage')->with('message','The language has been successfully entered.');
+ 
+    }
+
+    //Edit Skills
+    public function editLanguage(){
+        $language = Language::where('user_id',Auth::user()->id)->first();
+        if($language){
+            return view('front-end.cv-content.edit_language',compact('language')); 
+        }
+        return view('front-end.cv-content.no-data');
+ 
+    }
+
+    //Update Language
+    public function updateLanguage(Request $request){
+        $request->validate([
+            'language'=>'required',
+        ]);
+
+        $language = Language::where('user_id',Auth::user()->id)->first();
+        if($language){
+            $language->update([
+            'language'=>$request->language,
+        ]);
+        $language->save();
+        return redirect()->back()->with('message','The language has been updated successfully.');
+        }
+        return redirect()->back()->with('message','The record to update could not be found.');
+
+    }
+
+
+    //Image upload
+    public function uploadImage(){
+        return view('front-end.cv-content.image');
+    }
+
+    //Image store
+    public function storeImage(Request $request){
+        $file = $request->file('image');
+        $fileName = date('YmdHi') . '.' . $file->extension();
+        $path = public_path('upload_image'.$fileName);
+
+        $manager = new ImageManager(new Driver());
+        $img = $manager->read($file);
+        $img->resize(480,480);
+        $img->toJpeg(80)->save($path);
+        $imageProfile  = 'public/upload_image/' . $fileName;
+
+        $image = new Image();
+        $image->user_id = Auth::user()->id;
+        $image->image = $imageProfile;
+        $image->save();
+        return redirect()->back()->with('message','The image has been updated successfully.');
+
+    }
 
 }
   

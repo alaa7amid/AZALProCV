@@ -57,6 +57,20 @@ Route::middleware('auth')->group(function(){
     //edit education
     Route::get('user/education/edit',[frontendController::class,'editEducation'])->name('editEducation');
     Route::post('user/education/update',[frontendController::class,'updateEducation'])->name('updateEducation');
+
+    //language
+    Route::get('user/language',[frontendController::class,'language'])->name('language');
+    Route::post('user/language/store',[frontendController::class,'storeLanguage'])->name('storeLanguage');
+    
+    //edit skills
+    Route::get('user/language/edit',[frontendController::class,'editLanguage'])->name('editLanguage');
+    Route::post('user/language/update',[frontendController::class,'updateLanguage'])->name('updateLanguage');
+
+
+
+    //image
+    Route::get('user/image',[frontendController::class,'uploadImage'])->name('uploadImage');
+    Route::post('user/image/store',[frontendController::class,'storeImage'])->name('storeImage');
 });
 
 
