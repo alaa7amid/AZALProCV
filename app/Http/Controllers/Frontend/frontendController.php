@@ -299,21 +299,76 @@ class frontendController extends Controller
     public function storeImage(Request $request){
         $file = $request->file('image');
         $fileName = date('YmdHi') . '.' . $file->extension();
-        $path = public_path('upload_image'.$fileName);
+        $path = public_path('upload_image/'.$fileName);
 
         $manager = new ImageManager(new Driver());
         $img = $manager->read($file);
         $img->resize(480,480);
         $img->toJpeg(80)->save($path);
-        $imageProfile  = 'public/upload_image/' . $fileName;
+        // $imageProfile  = 'public/upload_image/' . $fileName; ٠٧٧٧١٦٩٠٩١٢
 
         $image = new Image();
         $image->user_id = Auth::user()->id;
-        $image->image = $imageProfile;
+        $image->image = 'upload_image/' . $fileName;
         $image->save();
         return redirect()->back()->with('message','The image has been updated successfully.');
-
     }
+
+    //Edit Image
+    public function editImage(){
+        $image = Image::where('user_id',Auth::user()->id)->first();
+        if($image){
+            return view('front-end.cv-content.edit_image');
+        }
+        return view('front-end.cv-content.no-data');
+    }
+
+    //Update Image 
+    // Update Image
+    public function updateImage(Request $request) {
+        // 1. الحصول على السجل الحالي للصورة بناءً على معرف المستخدم
+        $image = Image::where('user_id', Auth::user()->id)->first();
+    
+        // 2. التحقق من وجود صورة مرفوعة في الطلب
+        if ($request->hasFile('image')) {
+            // 3. التحقق من وجود الصورة القديمة وحذفها إذا كانت موجودة
+            if ($image && file_exists(public_path($image->image))) {
+                unlink(public_path($image->image));  // حذف الصورة القديمة
+            }
+    
+            // 4. استلام الملف الجديد من الطلب
+            $file = $request->file('image');
+            $fileName = date('YmdHi') . '.' . $file->extension();  // إنشاء اسم فريد للصورة
+            $path = public_path('upload_image/'.$fileName);
+
+    
+            // 5. معالجة الصورة الجديدة
+            $manager = new ImageManager(new Driver());
+            $img = $manager->read($file);  // استخدم make بدلاً من read
+            $img->resize(480, 480);  // تغيير حجم الصورة
+            $img->toJpeg(80)->save($path);  // حفظ الصورة
+    
+            // 6. تحديث السجل في قاعدة البيانات
+            if ($image) {
+                $image->image = 'upload_image/' . $fileName;  // تحديث المسار الجديد للصورة
+                $image->save();  // حفظ التعديلات
+            } else {
+                // إذا لم يكن هناك صورة سابقة، نقوم بإنشاء سجل جديد
+                $newImage = new Image();
+                $newImage->user_id = Auth::user()->id;
+                $newImage->image = 'upload_image/' . $fileName;
+                $newImage->save();
+            }
+    
+            // 7. إعادة التوجيه مع رسالة نجاح
+            return redirect()->back()->with('message', 'The image has been updated successfully.');
+        }
+    
+        // 8. إذا لم تكن هناك صورة مرفوعة
+        return redirect()->back()->with('error', 'No image was uploaded.');
+    }
+    
+
 
 }
   
