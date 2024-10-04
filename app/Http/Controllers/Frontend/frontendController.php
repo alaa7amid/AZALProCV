@@ -210,7 +210,7 @@ class frontendController extends Controller
 
     //Edit Education
     public function editEducation(){
-        $education = Education::where('user_id',Auth::user()->id)->first();
+        $education = Education::where('user_id',Auth::user()->id)->get();
         if($education){
            return view('front-end.cv-content.edit_education',compact('education')); 
         }
@@ -220,28 +220,24 @@ class frontendController extends Controller
 
     //Update Education
     public function updateEducation(Request $request){
-        $request->validate([
-            'education_level' => 'required|string',
-            'startDate' => 'required|date',
-            'endDate'=>'required|date',
-            'department' => 'required|string',
-        ]);
-    
         
-    
-        $education = Education::where('user_id', Auth::user()->id)->first();
-        if ($education) {
-            $education->update([
-                'education_level' => $request->education_level,
-                'startDate' => $request->startDate,
-                'endDate' => $request->endDate,
-                'department' => $request->department,
-            ]);
-    
+        $education = Education::where('user_id',Auth::user()->id)->get();
+
+        if($education->isNotEmpty()){
+            foreach($education as $edu){
+              if(isset($request->education[$edu->id])){
+                $edu->update([
+                    'education_level' => $request->education[$edu->id]['education_level'],
+                    'startDate' => $request->education[$edu->id]['startDate'],
+                    'endDate' => $request->education[$edu->id]['endDate'],
+                    'department' => $request->education[$edu->id]['department'],
+                ]);
+              }  
+            }
             return redirect()->back()->with('message', 'The education details have been updated successfully.');
         }
-    
         return redirect()->back()->with('message', 'The record to update could not be found.');
+
     }
     
 

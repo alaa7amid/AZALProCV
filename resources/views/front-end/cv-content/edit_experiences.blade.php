@@ -22,7 +22,7 @@
                   <form class="needs-validation" method="POST" action="{{route('updateExperience')}}" novalidate>
                     @csrf
                     @foreach ($experiences as $experience)
-                        <div class="form-group mb-3">
+                        <div class="form-group mb-3"> 
                             <label for="company_name_{{$experience->id}}">Company Name, Freelance work</label>
                             <input type="text" name="experiences[{{$experience->id}}][company_name]" value="{{$experience->company_name}}" id="company_name_{{$experience->id}}" class="form-control" placeholder="Enter company name or Freelance work" required>
                         </div>
