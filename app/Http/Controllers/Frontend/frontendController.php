@@ -5,12 +5,15 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\BasicInfo;
 use App\Models\Education;
+use App\Models\Experience;
 use App\Models\Image;
 use App\Models\Language;
 use App\Models\ProfileInfo;
+use App\Models\Project;
 use App\Models\Skills;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 
@@ -295,24 +298,26 @@ class frontendController extends Controller
         return view('front-end.cv-content.image');
     }
 
-    //Image store
-    public function storeImage(Request $request){
-        $file = $request->file('image');
+    
+    // Image store
+    public function storeImage(Request $request) {
+        $file = $request->file('image');  // استلام الصورة من الطلب
+        
+        // إنشاء اسم فريد للملف مع التاريخ
         $fileName = date('YmdHi') . '.' . $file->extension();
-        $path = public_path('upload_image/'.$fileName);
 
-        $manager = new ImageManager(new Driver());
-        $img = $manager->read($file);
-        $img->resize(480,480);
-        $img->toJpeg(80)->save($path);
-        // $imageProfile  = 'public/upload_image/' . $fileName; ٠٧٧٧١٦٩٠٩١٢
+        // تخزين الصورة في مجلد storage/app/public/upload_image
+        $path = $file->storeAs('public/upload_image', $fileName);
 
+        // حفظ المسار في قاعدة البيانات مع تجاهل 'public/'
         $image = new Image();
         $image->user_id = Auth::user()->id;
-        $image->image = 'upload_image/' . $fileName;
+        $image->image = 'upload_image/' . $fileName;  // تخزين المسار بدون 'public/'
         $image->save();
-        return redirect()->back()->with('message','The image has been updated successfully.');
+
+        return redirect()->route('experience')->with('message', 'The image has been updated successfully.');
     }
+
 
     //Edit Image
     public function editImage(){
@@ -323,49 +328,152 @@ class frontendController extends Controller
         return view('front-end.cv-content.no-data');
     }
 
-    //Update Image 
     // Update Image
     public function updateImage(Request $request) {
-        // 1. الحصول على السجل الحالي للصورة بناءً على معرف المستخدم
         $image = Image::where('user_id', Auth::user()->id)->first();
-    
-        // 2. التحقق من وجود صورة مرفوعة في الطلب
-        if ($request->hasFile('image')) {
-            // 3. التحقق من وجود الصورة القديمة وحذفها إذا كانت موجودة
-            if ($image && file_exists(public_path($image->image))) {
-                unlink(public_path($image->image));  // حذف الصورة القديمة
-            }
-    
-            // 4. استلام الملف الجديد من الطلب
-            $file = $request->file('image');
-            $fileName = date('YmdHi') . '.' . $file->extension();  // إنشاء اسم فريد للصورة
-            $path = public_path('upload_image/'.$fileName);
 
-    
-            // 5. معالجة الصورة الجديدة
-            $manager = new ImageManager(new Driver());
-            $img = $manager->read($file);  // استخدم make بدلاً من read
-            $img->resize(480, 480);  // تغيير حجم الصورة
-            $img->toJpeg(80)->save($path);  // حفظ الصورة
-    
-            // 6. تحديث السجل في قاعدة البيانات
+        if ($request->hasFile('image')) {
+            // حذف الصورة القديمة إذا كانت موجودة
+            if ($image && Storage::exists('public/' . $image->image)) {
+                Storage::delete('public/' . $image->image);
+            }
+
+            // استلام الملف الجديد من الطلب
+            $file = $request->file('image');
+            $fileName = date('YmdHi') . '.' . $file->extension();
+
+            // تخزين الصورة الجديدة في storage/app/public/upload_image
+            $path = $file->storeAs('public/upload_image', $fileName);
+
+            // تحديث المسار في قاعدة البيانات
             if ($image) {
-                $image->image = 'upload_image/' . $fileName;  // تحديث المسار الجديد للصورة
-                $image->save();  // حفظ التعديلات
+                $image->image = 'upload_image/' . $fileName;  // تخزين المسار الجديد بدون 'public/'
+                $image->save();
             } else {
-                // إذا لم يكن هناك صورة سابقة، نقوم بإنشاء سجل جديد
                 $newImage = new Image();
                 $newImage->user_id = Auth::user()->id;
                 $newImage->image = 'upload_image/' . $fileName;
                 $newImage->save();
             }
-    
-            // 7. إعادة التوجيه مع رسالة نجاح
+
             return redirect()->back()->with('message', 'The image has been updated successfully.');
         }
-    
-        // 8. إذا لم تكن هناك صورة مرفوعة
+
         return redirect()->back()->with('error', 'No image was uploaded.');
+    }
+
+    
+
+    //Experiences 
+    public function experience(){
+        return view('front-end.cv-content.experiences');
+    }
+    
+    //Experiences Store
+    public function experienceStore(Request $request){
+
+        $experience = new Experience();
+        $experience->user_id = Auth::user()->id;
+        $experience->company_name = $request->company_name;
+        $experience->position = $request->position;
+        $experience->startDate = $request->startDate;
+        $experience->endDate = $request->endDate;
+        $experience->description = $request->description;
+        $experience->save();
+
+        return redirect()->route('projects')->with('message', 'The experience has been successfully entered.');
+
+    }
+
+    //Experiences Edit
+    public function editExperience(){
+        $experiences = Experience::where('user_id',Auth::user()->id)->get();
+        if($experiences){
+            return view('front-end.cv-content.edit_experiences',compact('experiences'));
+        }
+        return view('front-end.cv-content.no-data');
+    }
+
+    public function updateExperience(Request $request) {
+        $request->validate([
+            'experiences' => 'required|array',
+        ]);
+    
+        // استرجاع جميع الخبرات للمستخدم
+        $experiences = Experience::where('user_id', Auth::user()->id)->get();
+    
+        // التحقق مما إذا كانت هناك خبرات
+        if ($experiences->isNotEmpty()) {
+            foreach ($experiences as $experience) {
+                if (isset($request->experiences[$experience->id])) {
+                    $experience->update([
+                        'company_name' => $request->experiences[$experience->id]['company_name'],
+                        'position' => $request->experiences[$experience->id]['position'],
+                        'startDate' => $request->experiences[$experience->id]['startDate'],
+                        'endDate' => $request->experiences[$experience->id]['endDate'],
+                        'description' => $request->experiences[$experience->id]['description'],
+                    ]);
+                }
+            }
+            return redirect()->back()->with('message', 'The experiences details have been updated successfully.');
+        }
+    
+        return redirect()->back()->with('message', 'The record to update could not be found.');
+    }
+    
+
+    //Projects
+    public function projects(){
+        return view('front-end.cv-content.projects');
+    }
+
+    //Projects Store
+    public function projectsStore(Request $request){
+
+        $request->validate([
+            'project_name' => 'required|string',
+            'Technologies' => 'required|string',
+            'description' => 'required|string',
+        ]);
+
+        $projects = new Project();
+        $projects->user_id = Auth::user()->id;
+        $projects->project_name = $request->project_name;
+        $projects->Technologies = $request->Technologies;
+        $projects->description = $request->description;
+        $projects->save();
+
+        return redirect()->route('createCv')->with('message', 'The experience has been successfully entered.');
+
+    }
+    
+    //edit projects
+    public function editProjects(){
+        $projects = Project::where('user_id',Auth::user()->id)->get();
+        return view('front-end.cv-content.edit_projects',compact('projects'));
+    }
+
+    //update projects
+    public function updateProjects(Request $request) {
+        // استرجاع جميع المشاريع للمستخدم
+        $projects = Project::where('user_id', Auth::user()->id)->get();
+    
+        // التحقق مما إذا كانت هناك مشاريع
+        if ($projects->isNotEmpty()) {
+            foreach ($projects as $project) {
+                // التحقق مما إذا كانت بيانات المشروع موجودة في الطلب
+                if (isset($request->projects[$project->id])) {
+                    // تحديث بيانات المشروع
+                    $project->update([
+                        'project_name' => $request->projects[$project->id]['project_name'],
+                        'Technologies' => $request->projects[$project->id]['Technologies'],
+                        'description' => $request->projects[$project->id]['description'],
+                    ]);
+                }
+            }
+            return redirect()->back()->with('message', 'The projects details have been updated successfully.');
+        }
+        return redirect()->back()->with('message', 'The record to update could not be found.');
     }
     
 

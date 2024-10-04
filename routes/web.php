@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\backendController;
+use App\Http\Controllers\Frontend\CvController;
 use App\Http\Controllers\Frontend\frontendController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -26,7 +27,7 @@ require __DIR__.'/auth.php';
 Route::middleware('auth')->group(function(){
     // Route::get('user',[backendController::class,'index']);
     //basic information
-    Route::get('user/basicInfo',[frontendController::class,'info'])->name('cerateCV');
+    Route::get('user/basicInfo',[frontendController::class,'info'])->name('BaiscInfo');
     Route::post('user/basicInfo/store',[frontendController::class,'storeBaiscInfo'])->name('storeBaiscInfo');
     
     //edit basic information
@@ -73,6 +74,32 @@ Route::middleware('auth')->group(function(){
     //edit image 
     Route::get('user/image/edit',[frontendController::class,'editImage'])->name('editImage');
     Route::post('user/image/update',[frontendController::class,'updateImage'])->name('updateImage');
+
+    //experience 
+    Route::get('user/experience',[frontendController::class,'experience'])->name('experience');
+    Route::post('user/experience/store',[frontendController::class,'experienceStore'])->name('experienceStore');
+
+    //edit experience 
+    Route::get('user/experience/edit',[frontendController::class,'editExperience'])->name('editExperience');
+    Route::post('user/experience/update',[frontendController::class,'updateExperience'])->name('updateExperience');
+
+    //projects 
+    Route::get('user/projects',[frontendController::class,'projects'])->name('projects');
+    Route::post('user/projects/store',[frontendController::class,'projectsStore'])->name('projectsStore');
+
+    //edit projects 
+    Route::get('user/projects/edit',[frontendController::class,'editProjects'])->name('editProjects');
+    Route::post('user/projects/update',[frontendController::class,'updateProjects'])->name('updateProjects');
+ 
+     
+
+
+
+
+
+    // create CV
+    Route::get('user/create/cv',[CvController::class,'createCv'])->name('createCv');
+    
 });
 
 

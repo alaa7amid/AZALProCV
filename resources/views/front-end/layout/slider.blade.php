@@ -30,7 +30,7 @@
                   </p>
                   @auth
                   <div class="btn-box">
-                    <a href="{{route('cerateCV')}}" class="btn-1">
+                    <a href="{{route('BaiscInfo')}}" class="btn-1">
                       Create Your CV
                     </a>
                   </div>
@@ -68,7 +68,7 @@
                   </p>
                   @auth
                   <div class="btn-box">
-                    <a href="{{route('cerateCV')}}" class="btn-1">
+                    <a href="{{route('BaiscInfo')}}" class="btn-1">
                       Create Your CV
                     </a>
                   </div>

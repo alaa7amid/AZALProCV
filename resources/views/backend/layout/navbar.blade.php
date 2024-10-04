@@ -41,7 +41,8 @@
             <a class="nav-link pl-lg-2" href="{{route('editEducation')}}"><span class="ml-1">Edit Education Detailes</span></a>
             <a class="nav-link pl-lg-2" href="{{route('editLanguage')}}"><span class="ml-1">Edit Language</span></a>
             <a class="nav-link pl-lg-2" href="{{route('editImage')}}"><span class="ml-1">Edit Image</span></a>
-            <a class="nav-link pl-lg-2" href="./ui-tabs-accordion.html"><span class="ml-1">Tabs & Accordion</span></a>
+            <a class="nav-link pl-lg-2" href="{{route('editExperience')}}"><span class="ml-1">Edit Experiences</span></a>
+            <a class="nav-link pl-lg-2" href="{{route('editProjects')}}"><span class="ml-1">Edit Projects</span></a>
             <a class="nav-link pl-lg-2" href="./ui-progress.html"><span class="ml-1">Progress</span></a>
           </div>
         </li>
