@@ -15,12 +15,13 @@ return new class extends Migration
             $table->id();
             $table->text('user_id');
             $table->text('name');
+            $table->text('jobTitle');
             $table->text('email');
             $table->text('phoneNumber');
             $table->text('address');
-            $table->text('city');
-            $table->text('image')->nullable();
-            $table->text('edit')->default(0);
+            $table->text('country');
+            $table->text('linkedin')->nullable();
+            $table->text('github')->nullable();
             $table->timestamps();
         });
     }

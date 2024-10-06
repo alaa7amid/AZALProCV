@@ -16,7 +16,7 @@
             <div class="col-md-8 mb-4">
               <div class="card shadow mb-4">
                 <div class="card-header">
-                  <strong class="card-title">Experiences Detailes</strong>
+                  <strong class="card-title">Experiences Detailes،Volunteer campaigns</strong>
                 </div>
                 <div class="card-body">
                   <form class="needs-validation" method="POST" action="{{route('experienceStore')}}" novalidate>
@@ -32,14 +32,21 @@
                           placeholder="Enter.." required>
                     </div>
                     <div class="form-row">
-                      <div class="col-md-8 mb-3">
-                        <label for="exampleInputEmail2">Start Date</label>
-                        <input type="text" name="startDate" class="form-control drgpicker" id="date-input1" value="04/24/2020" aria-describedby="button-addon2">
-                      </div>
-                      <div class="col-md-4 mb-3">
-                        <label for="custom-phone">End Date</label>
-                        <input type="text" name="endDate" class="form-control drgpicker" id="date-input1" value="04/24/2020" aria-describedby="button-addon2">
-                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label for="start-date">Start Date</label>
+                        <input type="date" name="startDate" class="form-control" id="start-date" required>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <label for="end-date">End Date</label>
+                        <input type="date" name="endDate" class="form-control" id="end-date">
+                    </div>
+                    
+                    <div class="col-md-4 mt-2">
+                        <input type="checkbox" id="still-working" name="stillWorking" value="1" onchange="toggleEndDate()">
+                        <label for="still-working">I am still working here</label>
+                    </div>
+                    
                     </div> <!-- /.form-row -->
                     <div class="form-group mb-3">
                       <label for="address-wpalaceholder">Description</label>
@@ -47,6 +54,12 @@
                         placeholder="Enter.." required>
                     </div>
                     <button class="btn btn-primary" type="submit">Save</button>
+
+                    @php
+                        $experience = \App\Models\Experience::where('user_id',Auth::user()->id)->exists();
+                    @endphp
+                    <a href="{{ route('projects') }}" class="btn btn-secondary {{$experience ? '' : 'disabled'}}">Next</a> <!-- زر "Next" -->
+
                   </form>
                 </div> <!-- /.card-body -->
               </div> <!-- /.card -->
@@ -58,6 +71,22 @@
 
 
 
+@endsection
 
+@section('js')
+<script>
+  function toggleEndDate() {
+      const stillWorkingCheckbox = document.getElementById('still-working');
+      const endDateInput = document.getElementById('end-date');
+
+      // إذا تم اختيار "لا يزال يعمل هنا"، يتم تعطيل حقل نهاية التاريخ
+      if (stillWorkingCheckbox.checked) {
+          endDateInput.disabled = true;
+          endDateInput.value = ''; // إفراغ الحقل إذا كان معطلاً
+      } else {
+          endDateInput.disabled = false;
+      }
+  }
+</script>
 
 @endsection

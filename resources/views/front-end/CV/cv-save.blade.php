@@ -85,6 +85,13 @@
     </div>
 
     <div class="section">
+        <h2>Profile</h2>
+        <div class="section-content">
+            <p>{{ $profile->profile }}</p>
+        </div>
+    </div>
+    
+    <div class="section">
         <h2>Experience</h2>
         @foreach ($experiences as $experience)
             <div class="section-content">

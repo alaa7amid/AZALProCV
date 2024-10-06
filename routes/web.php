@@ -68,13 +68,13 @@ Route::middleware('auth')->group(function(){
     Route::get('user/language/edit',[frontendController::class,'editLanguage'])->name('editLanguage');
     Route::post('user/language/update',[frontendController::class,'updateLanguage'])->name('updateLanguage');
 
-    //image
-    Route::get('user/image',[frontendController::class,'uploadImage'])->name('uploadImage');
-    Route::post('user/image/store',[frontendController::class,'storeImage'])->name('storeImage');
+    // //image
+    // Route::get('user/image',[frontendController::class,'uploadImage'])->name('uploadImage');
+    // Route::post('user/image/store',[frontendController::class,'storeImage'])->name('storeImage');
 
-    //edit image 
-    Route::get('user/image/edit',[frontendController::class,'editImage'])->name('editImage');
-    Route::post('user/image/update',[frontendController::class,'updateImage'])->name('updateImage');
+    // //edit image 
+    // Route::get('user/image/edit',[frontendController::class,'editImage'])->name('editImage');
+    // Route::post('user/image/update',[frontendController::class,'updateImage'])->name('updateImage');
 
     //experience 
     Route::get('user/experience',[frontendController::class,'experience'])->name('experience');

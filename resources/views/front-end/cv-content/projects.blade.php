@@ -38,6 +38,10 @@
                         placeholder="project description" required></textarea>
                     </div>
                     <button class="btn btn-primary" type="submit">Save</button>
+                    @php
+                    $projects = \App\Models\project::where('user_id',Auth::user()->id)->exists();
+                @endphp
+                <a href="{{ route('createCv') }}" class="btn btn-secondary {{$projects ? '': 'disabled'}}">Next</a> <!-- زر "Next" -->
                   </form>
                 </div> <!-- /.card-body -->
               </div> <!-- /.card -->
@@ -50,5 +54,5 @@
 
 
 
-
+ 
 @endsection

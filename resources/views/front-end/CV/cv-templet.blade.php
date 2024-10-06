@@ -57,7 +57,8 @@
     .section h2 {
         border-bottom: 2px solid #000;
         padding-bottom: 5px;
-        /* margin-bottom: 10px; */
+        /* margin-bottom: 10px;
+         */
     }
 
     .section-content {
@@ -90,7 +91,16 @@
     <div class="contact-info">
         <p>Email: {{ $basicInfo->email }}</p>
         <p>Phone: {{ $basicInfo->phoneNumber }}</p>
-        <p><a href="#">LinkedIn Profile</a></p>
+        <p><a href="{{$basicInfo->linkedin}}">LinkedIn Profile</a></p>
+        <p><a href="{{$basicInfo->github}}">Github Profile</a></p>
+
+    </div>
+
+    <div class="section">
+        <h2>Profile</h2>
+        <div class="section-content">
+            <p>{{ $profile->profile }}</p>
+        </div>
     </div>
 
     <div class="section">
