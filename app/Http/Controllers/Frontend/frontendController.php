@@ -293,7 +293,6 @@ class frontendController extends Controller
     public function uploadImage(){
         return view('front-end.cv-content.image');
     }
-
     
     // Image store
     public function storeImage(Request $request) {

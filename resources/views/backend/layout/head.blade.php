@@ -25,5 +25,6 @@
   <link rel="stylesheet" href="{{ asset('back-end/css/app-light.css') }}" id="lightTheme">
   <link rel="stylesheet" href="{{ asset('back-end/css/app-dark.css') }}" id="darkTheme" disabled>
 
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css">
 </head>

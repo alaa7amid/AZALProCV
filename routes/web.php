@@ -5,10 +5,11 @@ use App\Http\Controllers\Frontend\CvController;
 use App\Http\Controllers\Frontend\frontendController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
-Route::get('/welcome', function () {
-    return view('welcome');
-});
+
+// Route::get('/test', [CvController::class,'downloadCV']);
+
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
@@ -91,14 +92,18 @@ Route::middleware('auth')->group(function(){
     Route::get('user/projects/edit',[frontendController::class,'editProjects'])->name('editProjects');
     Route::post('user/projects/update',[frontendController::class,'updateProjects'])->name('updateProjects');
  
-     
-
-
-
 
 
     // create CV
     Route::get('user/create/cv',[CvController::class,'createCv'])->name('createCv');
+
+    //download cv
+    Route::get('user/dowmload/cv',[CvController::class,'downloadCV'])->name('downloadCV');
+    // Route::get('/download-cv', function() {
+    //     $filePath = public_path('front-end/CV/cv-templet.blade.php'); // تأكد من أن المسار صحيح
+    //     return response()->download($filePath, 'cv-templet.blade.php');
+    // })->name('downloadCV');
+
     
 });
 

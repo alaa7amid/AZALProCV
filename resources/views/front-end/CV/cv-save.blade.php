@@ -1,7 +1,3 @@
-@extends('backend.master')
-
-@section('content')
-@section('css')
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -43,7 +39,7 @@
     }
 
     .contact-info {
-        /* margin-bottom: 20px; */
+        margin-bottom: 20px;
     }
 
     .contact-info p {
@@ -60,7 +56,7 @@
         /* margin-bottom: 10px; */
     }
 
-    .section-content {
+    .section-content { 
         margin-left: 20px;
     }
 
@@ -70,36 +66,31 @@
     }
 
     ul li {
-        margin-bottom: 5px;
+        margin-bottom: 10px;
         font-weight: 400;
         color: #000;
     }
 </style>
-@endsection
-
-<a href="{{ route('downloadCV') }}" class="download" download>
-    <i class="fas fa-download"></i> Download CV
-</a>
 
 <div class="container">
     <header>
-        <h1>{{ $basicInfo->name }}</h1>
+        <h1>{{$basicInfo->name}}</h1>
         <h2>Office Manager</h2>
     </header>
 
     <div class="contact-info">
-        <p>Email: {{ $basicInfo->email }}</p>
-        <p>Phone: {{ $basicInfo->phoneNumber }}</p>
-        <p><a href="#">LinkedIn Profile</a></p>
+        <p>Email: {{$basicInfo->email}}</p>
+        <p>Phone: {{$basicInfo->phoneNumber}}</p>
+        <p><a href="#" style="color: #000; text-decoration: none;">LinkedIn Profile</a></p>
     </div>
 
     <div class="section">
         <h2>Experience</h2>
         @foreach ($experiences as $experience)
             <div class="section-content">
-                <h3>{{ $experience->position }}, {{ $experience->company_name }}</h3>
-                <p>{{ $experience->startDate }} - {{ $experience->endDate }}</p>
-                <p>{{ $experience->description }}</p>
+                <h3>{{$experience->position}}, {{$experience->company_name}}</h3>
+                <p>{{$experience->startDate}} -  {{$experience->endDate}}</p>
+                <p>{{$experience->description}}</p>
             </div>
         @endforeach
     </div>
@@ -108,9 +99,9 @@
         <h2>Education</h2>
         @foreach ($educations as $education)
             <div class="section-content">
-                <h3>{{ $education->department }}</h3>
-                <p>{{ $education->education_level }}</p>
-                <p>{{ $education->startDate }} - {{ $education->endtDate }}</p>
+                <h3>{{$education->department}}</h3>
+                <p>{{$education->education_level}}</p>
+                <p>{{$education->startDate}} - {{$education->endtDate}}</p>
             </div>
         @endforeach
     </div>
@@ -131,10 +122,9 @@
         <div class="section-content">
             <ul>
                 @foreach($skills as $skill)
-                    <li>{{ $skill }}</li>
+                    <li>{{$skill}}</li>
                 @endforeach
             </ul>
         </div>
     </div>
 </div>
-@endsection
