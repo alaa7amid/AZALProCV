@@ -6,23 +6,10 @@ use App\Http\Controllers\Frontend\frontendController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
-use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
-
 
 
 // Route::get('/test', [CvController::class,'downloadCV']);
 
-Route::group(
-    [
-        'prefix' => LaravelLocalization::setLocale(),
-        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
-    ],
-    function () {
-        Route::get('test', function () {
-            return 'text';
-        })->name('test');
-    }
-);
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
