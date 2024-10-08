@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="en">
+{{-- <html lang="ar" dir="rtl"> --}}
+  <html lang="en" dir="ltr">
 
     <!-- head section -->
 

@@ -30,7 +30,7 @@
         </ul>
 
         <!-- عناصر تسجيل الدخول والخروج -->
-        <ul class="navbar-nav ml-auto">
+        {{-- <ul class="navbar-nav ml-auto">
           @auth
             <li class="nav-item">
               <form method="POST" action="{{ route('logout') }}">
@@ -56,7 +56,7 @@
               </li>
             @endif
           @endauth
-        </ul>
+        </ul> --}}
       </div>
 
 
@@ -64,8 +64,13 @@
           <div class="custom_menu-btn">
             <button>
               <span class="s-1"></span>
-              <span class="s-2"></span>
+              <span class="s-1"></span>
+
+              {{-- <span class="s-2"></span> --}}
               <span class="s-3"></span>
+              <span class="s-3"></span>
+              
+              
             </button>
           </div>
         </div>
